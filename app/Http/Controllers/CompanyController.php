@@ -24,7 +24,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        //
+        return view('companies.create');
     }
 
     /**
@@ -35,7 +35,17 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required',
+            'logo' => 'required',
+            'website' => 'required',
+        ]);
+        $company = new Company();
+        $company->fill($request->all());
+        return ($company->save() !== 1)
+            ? redirect('/company')->with('status_success', 'Company added!')
+            : redirect('/company')->with('status_error', 'Company can not be added!');    
     }
 
     /**
@@ -57,7 +67,7 @@ class CompanyController extends Controller
      */
     public function edit(Company $company)
     {
-        //
+        return view('companies.edit', ['company' => $company]);
     }
 
     /**
@@ -80,6 +90,7 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company)
     {
-        //
+        $company->delete();
+        return redirect('/company')->with('status_success', 'Company deleted!');
     }
 }

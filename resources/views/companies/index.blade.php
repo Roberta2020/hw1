@@ -13,7 +13,9 @@
         <tr>
             <td>{{ $company->name }}</td>
             <td>{{ $company->email }}</td>
-            <td>{{ $company->logo }}</td>
+            {{-- // TODO PAKEISTI KAD RODYTU MYSQL IR PSL PAVEIKSLIUKA KAI ADDINI  --}}
+            <?php $blob = $company->logo;?>
+            <td><img src="{{ 'data:image/jpeg;base64,' .base64_encode( $blob ) }}" alt="image" width="50" /></td>
             <td>{{ $company->website }}</td>
             <td>
                 <form action={{ route('company.destroy', $company->id) }} method="POST">
